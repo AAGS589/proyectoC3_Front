@@ -62,9 +62,8 @@ function Profile() {
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-
         </div>
-
+        
     )
 }
 
