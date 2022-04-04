@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../css/login.css';
 import axios from 'axios';
-import {Link} from "react-router-dom";
+import { Link ,Redirect } from 'react-router-dom';
 export default function Login(props) {
     const [password,setPassword] = useState('');
     const [userName,setUsername] = useState('');
@@ -9,20 +9,42 @@ export default function Login(props) {
 
 
     const login = async (e) => {
-        try {
+
             const res = await axios.post(
                 "http://localhost:5000/profile/login",JSON.stringify({'username':userName, 'password':password}),
                 {headers: {
                     'Content-Type': 'application/json',
 },}
             );
+
             console.log(res);
-        } catch (ex) {
-            console.log(ex);
+        let data = await res
+
+
+        if (res.status === 200){
+            // setUser(data)
+            // setUserProfile(jwt_decode(data.access))
+            // localStorage.setItem('token', data.access);
+            window.localStorage.setItem('user',res.data.username)
+            window.localStorage.setItem('id_user',res.data.id)
+            setRedirect(true)
+            // setUserLogin(true)
+        }else{
+            alert('Usuario o contraseña, icorrectos')
+/*            setError("Usuario o contraseña, icorrectos")
+            setTimeout(() => {
+                setError("")
+            }, 5000);*/
         }
+
+
     };
 
     return (
+        <>
+            {  redirect ?
+                <Redirect to='/profile' />
+                :
             <div className="row" id="login" >
                 <div className="col-sm-4 offset-4 mt-5">
                     <div className="card pt-4" id="tarjeta_login">
@@ -53,6 +75,7 @@ export default function Login(props) {
                     </div>
                 </div>
             </div>
-        
+            }
+        </>
     )
 }
