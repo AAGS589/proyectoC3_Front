@@ -7,6 +7,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import Gallery from 'react-photo-gallery';
 import data from "bootstrap/js/src/dom/data";
+import ReactMediumImg from "react-medium-zoom";
 
 export default function Profile() {
     let username = window.localStorage.getItem("user")
@@ -156,8 +157,10 @@ export default function Profile() {
                 </button>
             </div>
             <div>
-                <div >
-                    <Gallery photos={images_download} />
+                <div id="vista-imagenes" >
+
+                    {this.state.images_saved.map(image =>   <ReactMediumImg id="conf-imagen" src={image.src}  />)}
+
                 </div>
             </div>
         </div>
